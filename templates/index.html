@@ -1,0 +1,227 @@
+{% extends "base.html" %} {% block title %} Dashboard {% endblock %}
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<!-- Google Font: Source Sans Pro -->
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+/>
+<!-- Font Awesome -->
+<link
+  rel="stylesheet"
+  href="/static/assets/plugins/fontawesome-free/css/all.min.css"
+/>
+<!-- Ionicons -->
+<link
+  rel="stylesheet"
+  href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+/>
+<!-- Tempusdominus Bootstrap 4 -->
+<link
+  rel="stylesheet"
+  href="/static/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css"
+/>
+<!-- iCheck -->
+<link
+  rel="stylesheet"
+  href="/static/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css"
+/>
+<!-- JQVMap -->
+<link rel="stylesheet" href="/static/assets/plugins/jqvmap/jqvmap.min.css" />
+<!-- Theme style -->
+<link rel="stylesheet" href="/static/assets/css/adminlte.min.css" />
+<!-- overlayScrollbars -->
+<link
+  rel="stylesheet"
+  href="/static/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"
+/>
+<!-- Daterange picker -->
+<link
+  rel="stylesheet"
+  href="/static/assets/plugins/daterangepicker/daterangepicker.css"
+/>
+<!-- summernote -->
+<link
+  rel="stylesheet"
+  href="/static/assets/plugins/summernote/summernote-bs4.min.css"
+/>
+{% endblock stylesheets %} {% block content %}
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">
+            Advanced Safety Helmet, Mask, Jacket and Person Detection
+          </h1>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item active"></li>
+          </ol>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-6 connectedSortable">
+          <!-- Custom tabs (Charts with tabs)-->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-chart-pie mr-1"></i>
+                YOLOv8 Object Detection
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="tab-content p-0">
+                <!-- Upload form -->
+                <form
+                  class="form-signin col-lg-3"
+                  method="post"
+                  enctype="multipart/form-data"
+                >
+                  <h1 class="h3 mb-3 font-weight-normal">
+                    Upload any image or video
+                  </h1>
+                  <input
+                    type="file"
+                    name="file"
+                    class="form-control-file"
+                    id="inputfile"
+                    required
+                  />
+                  <br />
+                  <button
+                    class="btn btn-block btn-default btn-sm"
+                    type="submit"
+                  >
+                    Upload
+                  </button>
+                  <p class="mt-5 mb-3 text-muted">For Live Monitoring</p>
+                </form>
+
+                <!-- Start webcam button -->
+                <div class="box">
+                  <button
+                    id="start-webcam"
+                    onclick="startWebcam()"
+                    class="btn btn-lg btn-primary btn-block"
+                  >
+                    Start Webcam
+                  </button>
+                  <script>
+                    function startWebcam() {
+                      window.location.href = "/webcam_feed";
+                    }
+                  </script>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </section>
+
+        <!-- Right col -->
+        <section class="col-lg-6 connectedSortable">
+          <!-- Results -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-chart-pie mr-1"></i>
+                YOLOv8 Object Detection Results
+              </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="tab-content p-0">
+                <!-- Detected image display -->
+                {% if image_path %}
+                <img
+                  id="my-image"
+                  src="{{ url_for('static', filename=image_path) }}"
+                  style="height: 640px; width: 640px"
+                />
+                {% endif %}
+
+                <!-- Detected video display -->
+                {% if video_path %}
+                <video id="my-video" width="640" height="640" controls>
+                  <source
+                    src="{{ url_for('static', filename=video_path) }}"
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+                {% endif %}
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </section>
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<!-- jQuery -->
+<script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="/static/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge("uibutton", $.ui.button);
+</script>
+<!-- Bootstrap 4 -->
+<script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="/static/assets/plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="/static/assets/plugins/sparklines/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="/static/assets/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="/static/assets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="/static/assets/plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="/static/assets/plugins/moment/moment.min.js"></script>
+<script src="/static/assets/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="/static/assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Summernote -->
+<script src="/static/assets/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="/static/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/assets/js/adminlte.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="/static/assets/js/pages/dashboard.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/static/assets/js/demo.js"></script>
+{% endblock javascripts %}

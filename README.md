@@ -1,2 +1,2 @@
-# Safety-Helmet-For-Industrial-Site-using-YOLOV8
-Safety Helmet For Industrial Site using YOLOV8
+# YOLOv8-Flask
+Object Detection Web App using YOLOv8 &amp; Flask. Support Webcam &amp; RTSP Stream.
